@@ -3,21 +3,23 @@
    MangaDex API Powered Manga/Manhwa Reader
    ============================================ */
 
-// ─── MangaDex API ────────────────────────────
+// ─── MangaDex API (via Cloudflare Worker CORS Proxy) ──────
+const PROXY_BASE = 'https://mangadex-proxy.hadesmailbox.workers.dev';
 const API = {
     BASE: 'https://api.mangadex.org',
     COVER: 'https://uploads.mangadex.org/covers',
     lastRequest: 0,
 
     async _fetch(path, params = {}) {
-        const url = new URL(this.BASE + path);
+        // Build URL through our CORS proxy
+        const url = new URL(PROXY_BASE + path);
         Object.entries(params).forEach(([k, v]) => {
             if (Array.isArray(v)) v.forEach(val => url.searchParams.append(k, val));
             else if (v !== undefined && v !== null) url.searchParams.set(k, v);
         });
-        // Rate limit: 5 req/s
+        // Rate limit: 5 req/s (generous for proxy)
         const now = Date.now();
-        const wait = Math.max(0, 200 - (now - this.lastRequest));
+        const wait = Math.max(0, 250 - (now - this.lastRequest));
         if (wait) await this.delay(wait);
         this.lastRequest = Date.now();
         const res = await fetch(url.toString());
