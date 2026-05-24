@@ -1,131 +1,86 @@
-# 📚 KomikHero
+# KomikHero 📚
 
-> A beautiful manhwa/comic reading platform with vertical scroll reading, chapter management, and AI-powered recommendations.
+**Baca Manga & Manhwa Online — Powered by MangaDex API**
 
-**Powered by MiMo V2.5** — the AI brain behind the Curator, Reader, and Library agents.
+KomikHero adalah platform baca manga dan manhwa modern yang menggunakan MangaDex API untuk menyediakan konten nyata dengan gambar sampul asli dan halaman chapter langsung dari CDN MangaDex.
 
-![MiMo V2.5](https://img.shields.io/badge/Powered%20by-MiMo%20V2.5-FF6B6B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHRleHQgeT0iLjllbSIgZm9udC1zaXplPSIyMCI+8J+RpTwvdGV4dD48L3N2Zz4=)
-![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-![Built for MiMo AI Grant](https://img.shields.io/badge/Built%20for-MiMo%20AI%20Grant-blueviolet?style=for-the-badge)
+Dikurasi oleh **MiMo V2.5 Pro** dari Nous Research.
 
-## 🌐 Live Demo
+---
 
-**[manhwavault.pages.dev](https://crowfly22.github.io/KomikHero/)**
+## ✨ Fitur
 
-## ✨ Features
+- **🔍 Pencarian** — Cari ribuan manga, manhwa, dan manhua dari MangaDex
+- **📖 Baca Chapter** — Pembaca vertikal (webtoon style) dengan chapter pages asli
+- **🤖 Rekomendasi AI** — Kurasi otomatis oleh MiMo V2.5 Pro Curator Agent
+- **📚 Koleksi Pribadi** — Simpan manga favorit dan lacak riwayat baca
+- **🌙 Dark/Light Mode** — Mode gelap default dengan toggle tema
+- **📱 Responsif** — Desain mobile-first yang optimal di semua perangkat
+- **⚡ Cepat** — Loading skeleton, caching, dan optimasi performa
+- **🇮🇩 Bahasa Indonesia** — Interface sepenuhnya dalam Bahasa Indonesia
 
-### 🤖 Curator Agent (Powered by MiMo V2.5)
-- AI-powered recommendations based on reading patterns
-- Featured/trending section with banner cards
-- Genre filter: Action, Romance, Fantasy, Drama, Comedy, Sci-Fi, Horror, Slice of Life
-- Instant search with real-time filtering
-- Sort by Popular, Latest, Rating, A-Z
-
-### 📖 Reader Agent
-- Full vertical scroll reading (Webtoon/Tapas style)
-- Canvas-generated illustrations for each page
-- Reading progress bar with scroll position tracking
-- Auto-hiding toolbar after 3 seconds
-- Font size adjustment
-- Dark mode toggle in reading view
-- Chapter navigation (prev/next)
-- Scroll position memory via localStorage
-
-### 📚 Library Agent
-- Bookmarks & favorites system
-- Reading history tracking
-- Continue reading quick access
-- Reading stats: chapters read, estimated time, bookmarks count
-
-### 🎨 Design
-- Warm coral & teal color palette
-- Nunito + Inter typography
-- Mobile-first responsive design
-- Dark/light mode with system preference detection
-- Smooth animations and transitions
-- Canvas 2D generated cover art and page illustrations
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────┐
-│                 KomikHero                  │
-├─────────────────────────────────────────────┤
-│                                              │
-│  ┌──────────────┐  ┌──────────────┐         │
-│  │ Curator Agent │  │ Reader Agent │         │
-│  │ (MiMo V2.5)  │  │              │         │
-│  │              │  │ • Vertical   │         │
-│  │ • Discovery  │  │   Scroll     │         │
-│  │ • AI Picks   │  │ • Progress   │         │
-│  │ • Genres     │  │ • Navigation │         │
-│  └──────────────┘  └──────────────┘         │
-│                                              │
-│  ┌──────────────┐                            │
-│  │ Library Agent │                            │
-│  │              │                            │
-│  │ • Bookmarks  │  ┌────────────────────┐   │
-│  │ • History    │  │ localStorage       │   │
-│  │ • Stats      │  │ (All persistent    │   │
-│  │ • Collections│  │  data storage)     │   │
-│  └──────────────┘  └────────────────────┘   │
-│                                              │
-└─────────────────────────────────────────────┘
-```
-
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
 - **HTML5** — Semantic markup
-- **CSS3** — Custom properties, Grid, Flexbox, transitions
-- **Vanilla JavaScript** — Zero dependencies
-- **Canvas 2D API** — Cover art & page illustration generation
-- **localStorage** — Persistent user data (bookmarks, progress, history)
-- **Google Fonts** — Nunito (headings) + Inter (body)
-- **Intersection Observer** — Lazy loading & progress tracking
+- **CSS3** — CSS Variables, Grid, Flexbox, Backdrop-filter, Animations
+- **Vanilla JavaScript** — ES6+, Fetch API, Async/Await
+- **MangaDex API v5** — REST API tanpa autentikasi
+- **Google Fonts** — Playfair Display + DM Sans
+- **GitHub Pages** — Static hosting
 
-## 📁 Project Structure
+## 📡 MangaDex API Integration
+
+Semua konten berasal dari API publik MangaDex:
+
+| Endpoint | Fungsi |
+|----------|--------|
+| `GET /manga` | Pencarian & daftar manga |
+| `GET /manga/{id}` | Detail manga + author/artist |
+| `GET /manga/{id}/feed` | Daftar chapter per bahasa |
+| `GET /at-home/server/{id}` | URL halaman chapter |
+| CDN: `uploads.mangadex.org/covers` | Gambar sampul |
+
+Rate limit: 5 request/detik (dihormati dengan delay otomatis).
+
+## 🚀 Cara Pakai
+
+1. Buka [KomikHero](https://crowfly22.github.io/KomikHero/)
+2. Jelajahi manga populer di halaman Beranda
+3. Gunakan halaman Jelajah untuk pencarian spesifik
+4. Klik manga → lihat detail → pilih chapter → baca!
+5. Simpan manga favorit ke Koleksi
+
+## 📁 Struktur File
 
 ```
-KomikHero/
-├── index.html      # Main HTML shell
-├── styles.css      # All styling with CSS custom properties
-├── data.js         # Mock series data & storage helpers
-├── canvas.js       # Canvas 2D art generator
-├── app.js          # Core application logic
-├── LICENSE         # MIT License
-└── README.md       # This file
+/
+├── index.html    — HTML shell dengan Google Fonts, header, nav, reader overlay
+├── styles.css    — CSS lengkap (dark/light mode, responsive, glass morphism)
+├── app.js        — JavaScript (API calls, rendering, state management, reader)
+└── README.md     — Dokumentasi ini
 ```
 
-## 🚀 Getting Started
+## 🎨 Desain
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/crowfly22/KomikHero.git
-   ```
-2. Open `index.html` in a browser — that's it!
+- **Font Heading:** Playfair Display
+- **Font Body:** DM Sans
+- **Dark Mode:** Background #0F0F1A, Primary #FF6B8A, Secondary #A78BFA
+- **Light Mode:** Background #F8F7F4, Primary #E85D75
+- **Efek:** Glass morphism, skeleton loading, smooth transitions
 
-No build step. No dependencies. No npm install. Just open and read.
+## 📝 Catatan
 
-## 📱 Mock Content
+- Semua gambar berasal dari MangaDex CDN (covers + chapter pages)
+- Thumbnails menggunakan `.256.jpg` untuk performa optimal
+- CORS didukung langsung oleh MangaDex API
+- Data tersimpan di localStorage (bookmarks, history, theme)
 
-8 unique manhwa series with generated cover art:
-- **Shadow Monarch** — Action/Fantasy
-- **Blossom Heart Academy** — Romance/Drama
-- **Dragon Circuit** — Sci-Fi/Action
-- **Coffee & Ghosts** — Comedy/Slice of Life
-- **Crimson Throne** — Fantasy/Drama
-- **Neon Nights** — Sci-Fi/Horror
-- **Spirit Kitchen** — Fantasy/Comedy
-- **The Last Garden** — Drama/Slice of Life
+## 🙏 Credits
 
-Each series includes 3-5 chapters with 6 Canvas-generated pages per chapter.
+- [MangaDex](https://mangadex.org/) — API & konten manga
+- [Nous Research](https://nousresearch.com/) — MiMo V2.5 Pro AI Agent
+- Google Fonts — Playfair Display & DM Sans
 
-## 📄 License
+---
 
-MIT License — see [LICENSE](LICENSE)
-
-## 🙏 Acknowledgments
-
-- Built for the **MiMo 100T Submission Program**
-- Powered by **MiMo V2.5** from Xiaomi
-- Inspired by Webtoon, Tapas, and Tachiyomi
+*Dibuat dengan ❤️ oleh KomikHero Team · Powered by MiMo V2.5 Pro*
