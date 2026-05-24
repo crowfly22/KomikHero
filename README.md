@@ -1,4 +1,4 @@
-# 📚 ManhwaVault
+# 📚 KomikHero
 
 > A beautiful manhwa/comic reading platform with vertical scroll reading, chapter management, and AI-powered recommendations.
 
@@ -10,7 +10,7 @@
 
 ## 🌐 Live Demo
 
-**[manhwavault.pages.dev](https://crowfly22.github.io/ManhwaVault/)**
+**[manhwavault.pages.dev](https://crowfly22.github.io/KomikHero/)**
 
 ## ✨ Features
 
@@ -49,7 +49,7 @@
 
 ```
 ┌─────────────────────────────────────────────┐
-│                 ManhwaVault                  │
+│                 KomikHero                  │
 ├─────────────────────────────────────────────┤
 │                                              │
 │  ┌──────────────┐  ┌──────────────┐         │
@@ -86,7 +86,7 @@
 ## 📁 Project Structure
 
 ```
-ManhwaVault/
+KomikHero/
 ├── index.html      # Main HTML shell
 ├── styles.css      # All styling with CSS custom properties
 ├── data.js         # Mock series data & storage helpers
@@ -100,7 +100,7 @@ ManhwaVault/
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/crowfly22/ManhwaVault.git
+   git clone https://github.com/crowfly22/KomikHero.git
    ```
 2. Open `index.html` in a browser — that's it!
 
