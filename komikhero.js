@@ -723,9 +723,10 @@ async function openReader(mangaId, chapterId, chapterIndex) {
             return;
         }
 
-        // Route chapter images through CORS proxy
+        // Route chapter images through CORS proxy with CDN base
+        const cdnParam = encodeURIComponent(baseUrl);
         content.innerHTML = filenames.map((fn, i) => {
-            const url = `${PROXY_BASE}/data/${hash}/${fn}`;
+            const url = `${PROXY_BASE}/data/${hash}/${fn}?cdn=${cdnParam}`;
             return `<img src="${url}" alt="Halaman ${i + 1}" loading="lazy" style="min-height:200px">`;
         }).join('');
 
