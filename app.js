@@ -429,24 +429,47 @@ const app = {
         document.body.style.overflow = 'hidden';
 
         const content = document.getElementById('reader-content');
-        const totalPages = 6;
-
+        
+        // Get story pages for this chapter, or generate fallback
+        const storyPages = (series.storyPages && series.storyPages[chapter.num]) || [];
+        
         let html = '';
-        for (let i = 1; i <= totalPages; i++) {
-            html += `<div class="reader-page"><canvas id="page-${i}"></canvas></div>`;
-            if (i === 3) {
-                html += `<div class="reader-page-text">
-                    <p style="font-size:1.1em;font-weight:600;margin-bottom:8px">Chapter ${chapter.num}: ${chapter.title}</p>
-                    <p>The story continues as our hero faces new challenges. Tension rises in this pivotal chapter that will change everything...</p>
-                </div>`;
+        if (storyPages.length > 0) {
+            // Render actual comic pages with panels
+            storyPages.forEach((pageData, i) => {
+                html += `<div class="reader-page"><canvas id="page-${i}"></canvas></div>`;
+            });
+        } else {
+            // Fallback: generate generic pages
+            const totalPages = 5;
+            for (let i = 0; i < totalPages; i++) {
+                html += `<div class="reader-page"><canvas id="page-${i}"></canvas></div>`;
             }
         }
         content.innerHTML = html;
 
-        // Generate page art
-        for (let i = 1; i <= totalPages; i++) {
-            const c = document.getElementById('page-' + i);
-            if (c) ArtGen.page(c, series.id, i, totalPages);
+        // Generate comic page art
+        if (storyPages.length > 0) {
+            storyPages.forEach((pageData, i) => {
+                const c = document.getElementById('page-' + i);
+                if (c) ArtGen.comicPage(c, series.id, i + 1, pageData);
+            });
+        } else {
+            // Fallback: generate abstract art
+            const totalPages = 5;
+            for (let i = 0; i < totalPages; i++) {
+                const c = document.getElementById('page-' + i);
+                if (c) {
+                    const fallbackPage = {
+                        scene: 'default',
+                        panels: [
+                            { type: 'wide', scene: 'default', narration: `Chapter ${chapter.num}: ${chapter.title}`, characters: [], dialogue: [] },
+                            { type: 'wide', scene: 'default', narration: 'The story continues...', characters: [], dialogue: [] },
+                        ]
+                    };
+                    ArtGen.comicPage(c, series.id, i + 1, fallbackPage);
+                }
+            }
         }
 
         // Reset scroll
